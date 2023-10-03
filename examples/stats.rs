@@ -1,16 +1,14 @@
-use std::iter;
-
 use rand::prelude::*;
-use rand_float::rand_float;
+use rand_float::ImprovedFloat;
 
 fn main() {
-    let mut rng = rand::rngs::StdRng::from_entropy();
+    let rng = rand::rngs::StdRng::from_entropy();
 
     let total = 100_000_000;
 
-    let (min, sum, max) = iter::repeat_with(|| rand_float(&mut rng)).take(total).fold(
+    let (min, sum, max) = rng.sample_iter(ImprovedFloat).take(total).fold(
         (f64::INFINITY, 0.0f64, f64::NEG_INFINITY),
-        |(min, sum, max), x| {
+        |(min, sum, max), x: f64| {
             (
                 if min < x { min } else { x },
                 sum + x,

@@ -1,13 +1,11 @@
-use std::iter;
-
-use rand::prelude::*;
+use rand::{distributions, prelude::*};
 
 fn main() {
-    let mut rng = rand::rngs::StdRng::from_entropy();
+    let rng = rand::rngs::StdRng::from_entropy();
 
     let total = 100_000_000;
 
-    let (min, sum, max) = iter::repeat_with(|| rng.gen()).take(total).fold(
+    let (min, sum, max) = rng.sample_iter(distributions::Standard).take(total).fold(
         (f64::INFINITY, 0.0f64, f64::NEG_INFINITY),
         |(min, sum, max), x: f64| {
             (
