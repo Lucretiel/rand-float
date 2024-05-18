@@ -9,8 +9,8 @@ impl Distribution<f64> for ImprovedFloat {
         let bits: u64 = rng.next_u64();
 
         // Technically we could loop here and collect up to 1022 leading 0s, for
-        // ultra-high precision random tiny floats, but we assume that for
-        // practical purposes we'll never see even 32 consecutive 0 bits.
+        // ultra-high precision random tiny floats, but we assume that this is
+        // so unlikely that it's not worth the extra branching and complexity
         if bits == 0 {
             return 0.0;
         }
